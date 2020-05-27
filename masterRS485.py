@@ -27,7 +27,7 @@ def main():
     while True:
         print("********************************new request*****************************************")
         try:
-            # logger.info(master.execute(2, cst.READ_HOLDING_REGISTERS,1,2))
+            logger.info(master.execute(slaveAdr, cst.READ_HOLDING_REGISTERS,1,2))
             logger.info(master.execute(slaveAdr, cst.READ_COILS,1,2))
         except modbus_tk.modbus.ModbusError as exc:
             logger.error("%s- Code=%d", exc, exc.get_exception_code())
