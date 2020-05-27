@@ -11,8 +11,8 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-portSerial = config['Serial']['PORT']
-baudrateSerial = int(config['Serial']['Baudrate'])
+portSerial = config['Serial_Slave']['PORT']
+baudrateSerial = int(config['Serial_Slave']['Baudrate'])
 
 numD = int(config['Database']['NumDigital'])
 numA = int(config['Database']['NumAnalog'])
