@@ -17,11 +17,11 @@ baudrateSerial = int(config['Serial_Slave']['Baudrate'])
 numD = int(config['Database']['NumDigital'])
 numA = int(config['Database']['NumAnalog'])
 url = config['Database']['URL']
-
+offset = int(config['Database']['Offset'])
 slaveAdr = int(config['ModBus485']['SlaveAdr'])
 
 # tao doi tuong database
-db=readDB.ReadDB(numA,numD,url)
+db=readDB.ReadDB(numA,numD,url,offset)
 
 # tao doi duong modBus
 modbusServ = modbus_rtu.RtuServer(serial.Serial(portSerial), baudrate= baudrateSerial,  

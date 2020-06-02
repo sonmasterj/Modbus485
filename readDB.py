@@ -1,11 +1,13 @@
 import requests
 class ReadDB:
-    def __init__(self,numAnalog,numDigital,url):
+    def __init__(self,numAnalog,numDigital,url,offset):
         self.numAnalog = numAnalog
         self.numDigital = numDigital
         self.url = url
+        self.offset = offset
         self.regData = [0]*numAnalog
         self.coilData = [0]*numDigital
+	
     def updateData(self):
         try:
             responseDB = requests.get(self.url+'lastvalues/')
@@ -23,14 +25,14 @@ class ReadDB:
                 # kiem tra loai sensor
                 if sensorType == 'D':
                     # neu digital=> ghi du lieu vao list coil
-                    print('Digital Type')
+                   # print('Digital Type')
                     if len(index['v'])>0:
                         self.coilData[sensorChannel] = int(index['v'])
                     else:
                         self.coilData[sensorChannel] = 0
                 else:
                     # neu analog=> convert value
-                    print('Analog Type')
+                 #   print('Analog Type')
                     # tim out_min, out_min, in_min, in_max, offset, D qua api 
 
                     # tinh D
@@ -44,14 +46,14 @@ class ReadDB:
                         dataUnit = resDhUnit.json()
 
                         #  tinh out_min, out_min, in_min, in_max, offset
-                        input_max = int(dataUnit['variable']['input_max'])
-                        input_min = int(dataUnit['variable']['input_min'])
-                        offset = int(dataUnit['variable']['off_set'])
-                        output_max = int(dataUnit['variable']['output_max'])
-                        output_min = int(dataUnit['variable']['output_min'])
-
+                        input_max = int(dataUnit['variable']['output_max'])
+                        input_min = int(dataUnit['variable']['output_min'])
+                        # config = int(dataUnit['variable']['off_set'])
+                        output_max = 65535
+                        output_min = 0
+			
                         #  convert du lieu
-                        value = round((output_min-output_max)/(input_min-input_max)*(D-input_min)+output_min+offset)
+                        value = round((output_min-output_max)/(input_min-input_max)*(D-input_min)+output_min+ self.offset)
                         self.regData[sensorChannel] = value
                     except requests.exceptions.ConnectionError as err:
                         print('error request dhunit', err)
