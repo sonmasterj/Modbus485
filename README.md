@@ -1,7 +1,5 @@
 #Modbus485
 TODO:
-1. install modbus-tk library: pip install modbus-tk
-2. Config params for serial , modbus , database in file config.ini
-3. Run slaveRS485.py
-4. Run masterRS485.py
-Done!
+1. Cấu hình các thông số RS485 cho master ,slave trong file config.ini
+2. Chạy script init.sh để cài các package cần thiết, và thiết lập crontab : sudo sh ./init.sh
+3. Done!
